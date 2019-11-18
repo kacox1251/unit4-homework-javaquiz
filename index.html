@@ -2,22 +2,36 @@
 <html lang="en-us">
     <head>
         <meta charset="UTF-8">
-        <title>Password Generator</title>
+        <title>Javascript Quiz</title>
         <link rel="stylesheet" href="./style.css"> 
     </head>
     <body>
-        <div>
-            <!-- starting page has a div that contains an h1, a paragraph with small description, and a button to start quiz-->
-            <!-- include a button on all pages for viewing high scores-->
-            <!-- include a small div on all pages for displaying timer-->
-            <div>
-                <!-- need a div for each question that includes an h tag for the question, 
-                    and a button for each answer, an hr at bottom with a small 'right' or 'wrong' underneath -->
-            </div>
-            <!-- add a div for the end which displays an h1, the high scores, and an input for the initials, and a button for submit-->
-            <!-- very end have a div that contains an h1, a list to display high scores, a button to go back, and a button for clearing-->
+        <button id="view-scores">View Highscores</button>
+        <div id="timer"> </div>
+        <div id="front-page">
+            <h1 id="title">Javascript Quiz</h1>
+            <p id="description"></p>
+            <button onclick="startGame()" id="button start-button">Start Quiz</button>
         </div>
-        <script type="text/javascript" src="./script.js"></script>
+
+        <div class="question-container">
+        </div>
+
+        <div>
+            <h1 id="done">All done!</h1>
+            <p id="your-score"></p>
+            Enter Initials: <input type="text" name="initials">
+            <button id="submit-button">Submit</button>
+        </div>
+
+        <div>
+            <h1 id="highscores">Highscores</h1>
+            <ol id="score-list">
+            </ol>
+            <button class="go-back">Go Back</button>
+            <button class="clear">Clear Highscores</button>
+        </div>
         <script type="text/javascript" src="./questions.js"></script>
+        <script type="text/javascript" src="./script.js"></script>
     </body>
 </html>
