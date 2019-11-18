@@ -9,6 +9,16 @@ document.querySelector(".question-container").append(questionTitle);
 var startBtn = document.querySelector("#start-button");
 
 startBtn.addEventListener("click", function(event) {
+    var count = 91;
+    var timer = setInterval(function() {
+        count--;
+        document.querySelector('#timer').innerText=count;
+        
+        if(count === 0){
+            clearInterval(timer);
+        }
+    }, 1000);
+
     questionIndex++;
     questionTitle.textContent = questions[questionIndex].title;
     
@@ -20,15 +30,6 @@ startBtn.addEventListener("click", function(event) {
     }
 });
 
-//     var count = 91;
-//     var timer = setInterval(function() {
-//         count--;
-//         document.querySelector('#timer').innerText=count;
-        
-//         if(count === 0){
-//             clearInterval(timer);
-//         }
-//     }, 1000);
 
 
 
@@ -36,9 +37,8 @@ startBtn.addEventListener("click", function(event) {
 
 //check back to picture carousel to get a hint of what to do when changing questions
 //after question is answered, use an on click to change to the next question
-//score is calculated by time remaining, the right choice turns green
+//the right choice turns green
 //each wrong answer deducts x amount of time, the choice turns red
-//if found and have time maybe add sounds for right and wrong answers
 
 //after time runs out, or player completes questions, change to screen that says "All done!"
 //completing questions sets timer to zero
