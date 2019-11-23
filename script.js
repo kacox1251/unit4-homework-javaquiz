@@ -1,10 +1,6 @@
 var questionIndex = 0;
 
-var questionTitle = document.createElement("h2");
-questionTitle.setAttribute("class", "question-title");
-questionTitle.textContent = questions[questionIndex].title;
-
-document.querySelector(".question-container").append(questionTitle);
+var questionTitle = document.querySelector(".question-title");
 
 var startBtn = document.querySelector("#start-button");
 
@@ -19,17 +15,45 @@ startBtn.addEventListener("click", function(event) {
         }
     }, 1000);
 
-    questionIndex++;
-    questionTitle.textContent = questions[questionIndex].title;
-    
-    for (var i = 0; i < questions[questionIndex].choices.length; i++) {
-        var choiceBtn = document.createElement("button");
-        choiceBtn.setAttribute("class", "choice-button");
-        choiceBtn.textContent = questions[questionIndex].choices[i];
-        document.querySelector(".question-container").append(choiceBtn);
-    }
+    nextQuestion();
 });
 
+function increaseIndex() {
+    return questionIndex++;
+}
+
+function addButtonChoiceListener(event) {
+    var userChoice = event.target.innerText;
+    checkAnswer(userChoice);
+    increaseIndex();
+    nextQuestion()
+    console.log(event);
+}
+
+function nextQuestion() {
+    questionTitle.textContent = questions[questionIndex].title;
+    
+    var optionsContainer = document.querySelector(".options-container");
+    optionsContainer.textContent = "";
+    for (var i = 0; i < questions[questionIndex].choices.length; i++) {
+      var choiceBtn = document.createElement("button");
+      choiceBtn.setAttribute("class", "choice-button");
+      choiceBtn.textContent = questions[questionIndex].choices[i];
+      optionsContainer.append(choiceBtn);
+
+      choiceBtn.addEventListener("click", addButtonChoiceListener);
+    }
+    
+}
+
+function checkAnswer(userChoice) {
+    if (userChoice === questions[questionIndex].answer) {
+        console.log("correct");
+    }
+    else {
+        console.log("incorrect");
+    }
+}
 
 
 
