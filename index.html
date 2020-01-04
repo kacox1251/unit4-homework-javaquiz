@@ -1,40 +1,41 @@
 <!DOCTYPE html>
 <html lang="en-us">
-    <head>
-        <meta charset="UTF-8">
-        <title>Javascript Quiz</title>
-        <link rel="stylesheet" href="./style.css"> 
-    </head>
-    <body>
-        <button id="view-scores">View Highscores</button>
-        <div id="timer"> </div>
-        <div id="front-page">
-            <h1 id="title">Javascript Quiz</h1>
-            <p id="description"></p>
-            <button id="start-button">Start Quiz</button>
-        </div>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Javascript Quiz</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <button id="view-scores">View Highscores</button>
+    <div id="timer"></div>
+    <div id="front-page">
+      <h1 id="title">Javascript Quiz</h1>
+      <p id="description"></p>
+      <button id="start-button">Start Quiz</button>
+    </div>
 
-        <div class="question-container">
-            <h2 class="question-title"></h2>
-            <div class="options-container"></div>
-        </div>
+    <div class="question-container">
+      <h2 class="question-title"></h2>
+      <div class="options-container"></div>
+    </div>
 
-        <div>
-            <h1 id="done">All done!</h1>
-            <p id="your-score"></p>
-            Enter Initials: <input type="text" name="initials">
-            <button id="submit-button">Submit</button>
-        </div>
+    <div id="done" class="hidden">
+      <h1>All done!</h1>
+      <p id="your-score">Your Score: <span class="your-score"></span></p>
+      <p>Correct: <span class="correct"></span></p>
+      <p>Incorrect: <span class="incorrect"></span></p>
+      Enter Initials: <input type="text" name="initials" />
+      <button id="submit-button">Submit</button>
+    </div>
 
-        <div>
-            <h1 id="highscores">Highscores</h1>
-            <ol id="score-list">
-            </ol>
-            <button class="go-back">Go Back</button>
-            <button class="clear">Clear Highscores</button>
-        </div>
-        <!--put high scores on a separate html page-->
-        <script type="text/javascript" src="./questions.js"></script>
-        <script type="text/javascript" src="./script.js"></script>
-    </body>
+    <div id="highscores" class="hidden">
+      <h1>Highscores</h1>
+      <ol id="score-list"></ol>
+      <button class="go-back">Go Back</button>
+      <button class="clear">Clear Highscores</button>
+    </div>
+    <!--put high scores on a separate html page-->
+    <script type="text/javascript" src="./questions.js"></script>
+    <script type="text/javascript" src="./script.js"></script>
+  </body>
 </html>
