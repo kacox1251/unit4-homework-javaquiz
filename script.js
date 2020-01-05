@@ -1,60 +1,54 @@
 var questionIndex = 0;
-var questionTitle = document.querySelector(".question-title");
-
-var startBtn = document.querySelector("#start-button");
-var highScoresBtn = document.querySelector("#view-scores");
 var correct = 0;
 var incorrect = 0;
-highScoresBtn.addEventListener("click", function(event) {
-  var highScoreEl = document.querySelector("#highscores");
-  var frontPageEl = document.querySelector("#front-page");
-  var hasHiddenClass = highScoreEl.classList.contains("hidden");
-  if (hasHiddenClass) {
-    highScoreEl.classList.remove("hidden");
-    frontPageEl.classList.add("hidden");
-  } else {
-    highScoreEl.classList.add("hidden");
-    frontPageEl.classList.remove("hidden");
-  }
-});
-var count = 91;
+var count = 90;
 var timer;
-startBtn.addEventListener("click", function(event) {
-  var questionContainerEl = document.querySelector(".question-container");
-  if (questionContainerEl.classList.contains("hidden")) {
-    questionContainerEl.classList.remove("hidden");
-  }
-  timer = setInterval(function() {
-    count--;
-    document.querySelector("#timer").innerText = count;
 
-    if (count === 0) {
-      clearInterval(timer);
-    }
-  }, 1000);
-  var frontPageEl = document.querySelector("#front-page");
-  frontPageEl.classList.add("hidden");
-  nextQuestion();
-});
+var questionTitle = document.querySelector(".question-title");
+var startBtn = document.querySelector("#start-button");
+var highScoresBtn = document.querySelector("#view-scores");
+var submitScoreBtn = document.querySelector("#submit-button");
+var optionsContainer = document.querySelector(".options-container");
+var highScoreEl = document.querySelector("#highscores");
+var frontPageEl = document.querySelector("#front-page");
+var questionContainerEl = document.querySelector(".question-container");
+var yourScoreEl = document.querySelector(".your-score");
+var correctEl = document.querySelector(".correct");
+var incorrectEl = document.querySelector(".incorrect");
+var allDoneEl = document.querySelector("#done");
+var timerEl = document.querySelector("#timer");
+var tryAgainBtn = document.querySelector("#try-again");
+
+
+var hasHiddenClass = highScoreEl.classList.contains("hidden");
 
 function increaseIndex() {
   return questionIndex++;
 }
 
-function endGame() {
-  questionIndex = 0;
-  count = 91;
-  clearInterval(timer);
-  var questionContainerEl = document.querySelector(".question-container");
-  var yourScoreEl = document.querySelector(".your-score");
-  var correctEl = document.querySelector(".correct");
-  var incorrectEl = document.querySelector(".incorrect");
-  var allDoneEl = document.querySelector("#done");
-  questionContainerEl.classList.add("hidden");
-  correctEl.textContent = correct;
-  incorrectEl.textContent = incorrect;
-  yourScoreEl.textContent = correct * 15;
-  allDoneEl.classList.remove("hidden");
+function checkAnswer(userChoice) {
+  if (userChoice === questions[questionIndex].answer) {
+    console.log("correct");
+    correct++;
+  } else {
+    console.log("incorrect");
+    count -= 15;
+    incorrect++;
+  }
+}
+
+function nextQuestion() {
+  questionTitle.textContent = questions[questionIndex].title;
+
+  optionsContainer.textContent = "";
+  for (var i = 0; i < questions[questionIndex].choices.length; i++) {
+    var choiceBtn = document.createElement("button");
+    choiceBtn.setAttribute("class", "choice-button");
+    choiceBtn.textContent = questions[questionIndex].choices[i];
+    optionsContainer.append(choiceBtn);
+
+    choiceBtn.addEventListener("click", addButtonChoiceListener);
+  }
 }
 
 function addButtonChoiceListener(event) {
@@ -70,31 +64,65 @@ function addButtonChoiceListener(event) {
   console.log(event);
 }
 
-function nextQuestion() {
-  questionTitle.textContent = questions[questionIndex].title;
+function endGame() {
+  clearInterval(timer);
 
-  var optionsContainer = document.querySelector(".options-container");
-  optionsContainer.textContent = "";
-  for (var i = 0; i < questions[questionIndex].choices.length; i++) {
-    var choiceBtn = document.createElement("button");
-    choiceBtn.setAttribute("class", "choice-button");
-    choiceBtn.textContent = questions[questionIndex].choices[i];
-    optionsContainer.append(choiceBtn);
-
-    choiceBtn.addEventListener("click", addButtonChoiceListener);
-  }
+  questionContainerEl.classList.add("hidden");
+  correctEl.textContent = correct;
+  incorrectEl.textContent = incorrect;
+  yourScoreEl.textContent = correct * 15;
+  allDoneEl.classList.remove("hidden");
+  timerEl.classList.add("hidden");
 }
 
-function checkAnswer(userChoice) {
-  if (userChoice === questions[questionIndex].answer) {
-    console.log("correct");
-    correct++;
+startBtn.addEventListener("click", function(event) {
+  timer = setInterval(function() {
+    document.querySelector("#timer").innerText = count;
+    count--;
+
+    if (count <= 0) {
+      clearInterval(timer);
+      endGame();
+    }
+    console.log(count);
+  }, 1000);
+
+  frontPageEl.classList.add("hidden");
+  highScoresBtn.classList.add("hidden");
+  nextQuestion();
+
+  if (questionContainerEl.classList.contains("hidden")) {
+    questionContainerEl.classList.remove("hidden");
+  }
+});
+
+highScoresBtn.addEventListener("click", function(event) {
+  if (hasHiddenClass) {
+    highScoreEl.classList.remove("hidden");
+    frontPageEl.classList.add("hidden");
   } else {
-    console.log("incorrect");
-    count -= 15;
-    incorrect++;
+    highScoreEl.classList.add("hidden");
+    frontPageEl.classList.remove("hidden");
   }
-}
+});
+
+
+submitScoreBtn.addEventListener("click", function(event) {
+  if (hasHiddenClass) {
+    highScoreEl.classList.remove("hidden");
+    allDoneEl.classList.add("hidden");
+  } else {
+    highScoreEl.classList.add("hidden");
+    allDoneEl.classList.remove("hidden");
+  }
+});
+
+tryAgainBtn.addEventListener("click", function(event) {
+  questionIndex = 0;
+  count = 90;
+
+
+});
 
 //TODO: Next steps:
 /* 
@@ -109,20 +137,3 @@ high scores. Add it in the appropriate place and save to local storage
 8. High scores need to go from local storage onto an ordered list
 
 */
-
-//start button changes the screen to the first question, starts the timer, and starts score keeping
-
-//check back to picture carousel to get a hint of what to do when changing questions
-//after question is answered, use an on click to change to the next question
-//the right choice turns green
-//each wrong answer deducts x amount of time, the choice turns red
-
-//after time runs out, or player completes questions, change to screen that says "All done!"
-//completing questions sets timer to zero
-//have it read the players high score
-//have an input for players initials
-//after submitting initials, add the scores and initials to local storage
-//changes to screen that displays all the high scores from local storage
-//include a button that takes you back to the start of the quiz
-//include a button that clears all info from local storage
-//the timer disappears and the "view high scores" button disappears
