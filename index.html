@@ -6,14 +6,14 @@
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
-    <button id="view-scores">View Highscores</button>
-    <div id="timer"></div>
     <div id="front-page">
       <h1 id="title">Javascript Quiz</h1>
       <p id="description"></p>
       <button id="start-button">Start Quiz</button>
+      <button id="view-scores">View Highscores</button>
     </div>
-
+    
+    <div id="timer"></div>
     <div class="question-container">
       <h2 class="question-title"></h2>
       <div class="options-container"></div>
@@ -24,7 +24,7 @@
       <p id="your-score">Your Score: <span class="your-score"></span></p>
       <p>Correct: <span class="correct"></span></p>
       <p>Incorrect: <span class="incorrect"></span></p>
-      Enter Initials: <input type="text" name="initials" />
+      Enter Initials: <input id="initials" type="text" name="initials"/>
       <button id="submit-button">Submit</button>
     </div>
 
@@ -34,7 +34,7 @@
       <button id="try-again">Try again</button>
       <button id="clear">Clear Highscores</button>
     </div>
-    <!--put high scores on a separate html page-->
+
     <script type="text/javascript" src="./questions.js"></script>
     <script type="text/javascript" src="./script.js"></script>
   </body>
