@@ -4,8 +4,6 @@ var correct = 0;
 var incorrect = 0;
 var count = 90;
 var timer;
-var users = [];
-var scores = [];
 
 var frontPageEl = document.querySelector("#front-page");
 var highScoresBtn = document.querySelector("#view-scores");
@@ -72,12 +70,14 @@ function addButtonChoiceListener(event) {
 
 function endGame() {
   clearInterval(timer);
-
+  
   questionContainerEl.classList.add("hidden");
-
+  
+  var yourScore = correct * 15 + count;
+  
   correctEl.textContent = correct;
   incorrectEl.textContent = incorrect;
-  yourScoreEl.textContent = correct * 15;
+  yourScoreEl.textContent = yourScore;
 
   allDoneEl.classList.remove("hidden");
   timerEl.classList.add("hidden");
@@ -116,24 +116,25 @@ highScoresBtn.addEventListener("click", function(event) {
   }
 });
 
+
 submitScoreBtn.addEventListener("click", function(event) {
   if (userInitials.value) {
-    users.push(userInitials.value);
-    localStorage.setItem("users:", users);
-    localStorage.getItem("users:");
-
-    scores.push(yourScoreEl.textContent);
-    scores.sort(function(a, b){return b-a});
-
-    localStorage.setItem("highscores", [scores]);
-    localStorage.getItem("highscores:");
-
-    var storageString = JSON.stringify(localStorage);
-    var storageParse = JSON.parse(storageString);
-
-    console.log(storageParse);
+    localStorage.setItem(userInitials.value, parseInt(yourScoreEl.textContent));
+    
   } else {
     console.log("nope")
+  }
+
+  var leaderBoard = Object.keys(localStorage).sort(function(a, b) {
+      return localStorage[b] - localStorage[a];
+  });
+
+  for(i = 0; i < leaderBoard.length; i++) {
+      console.log(leaderBoard[i], localStorage.getItem(leaderBoard[i]));
+    var highScoresListEl = document.createElement("li");
+    highScoresListEl.textContent = leaderBoard[i] + " : " + localStorage.getItem(userInitials.value);
+    highScoresListEl.classList.add("high-score-el")
+    highScoresList.appendChild(highScoresListEl);
   }
 
   if (hasHiddenClass) {
@@ -164,14 +165,7 @@ clearScoresList.addEventListener("click", function(event) {
   users = [];
   scores = [];
   localStorage.clear();
+
+  var element = document.querySelector(".high-score-el")
+  highScoresList.removeChild(element);
 });
-//TODO: Next steps:
-/* 
-1. We need to create a click handler for the submit on add initials (only should fire if the input value length is greater than 0)
-2. Click Handler should gather together the score and initials. Read from local storage, determine if in fact the current score belongs in the
-high scores. Add it in the appropriate place and save to local storage
-3. View High scores when trigger, should read from local storage and check for high scores and if they exist should display that data.
-7. High scores need to be organized highest to lowest
-8. High scores need to go from local storage onto an ordered list
-9. Clear High scores needs to clear (and possibly also the element)
-*/

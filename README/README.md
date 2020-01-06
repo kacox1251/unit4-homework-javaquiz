@@ -18,7 +18,8 @@ You can also download as a zip file by clicking "Download zip" in the "Clone or 
 
 ## Usage
 
-
+On the beginning page you can click Start to begin taking the quiz or click View Highscores to see any saved highscores.
+Once the quiz has begun a timer for 90 seconds starts to count down. Each wrong answer will deduct 15 seconds from the timer. Once the timer reaches zero, or all the questions are answered, the quiz ends. On the ending page you may choose to submit your highscore with your initials. Once submit is clicked you are brought to the Highscores screen to view highscores. You can click Clear Highscores to clear all the scores stored or you can lick Try Again to restart the quiz.
 
 
 ## Credits
