@@ -1,3 +1,11 @@
 .hidden {
     display: none;
-  }
+}
+
+#all-content {
+  text-align: center;
+}
+
+#timer {
+  text-align: center;
+}

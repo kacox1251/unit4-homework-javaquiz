@@ -50,6 +50,8 @@ function nextQuestion() {
     var choiceBtn = document.createElement("button");
     choiceBtn.setAttribute("class", "choice-button");
     choiceBtn.textContent = questions[questionIndex].choices[i];
+    choiceBtn.classList.add("btn");
+    choiceBtn.classList.add("btn-primary");
     optionsContainer.append(choiceBtn);
 
     choiceBtn.addEventListener("click", addButtonChoiceListener);
@@ -66,6 +68,21 @@ function addButtonChoiceListener(event) {
     return;
   }
   nextQuestion();
+}
+
+function viewHighScores() {
+  var leaderBoard = Object.keys(localStorage).sort(function(a, b) {
+    return localStorage[b] - localStorage[a];
+  });
+
+  for(i = 0; i < leaderBoard.length; i++) {
+      console.log(leaderBoard[i], localStorage.getItem(leaderBoard[i]));
+    var highScoresListEl = document.createElement("li");
+    highScoresListEl.textContent = leaderBoard[i] + " : " + localStorage.getItem(userInitials.value);
+    highScoresListEl.classList.add("high-score-el")
+    highScoresListEl.classList.add("list-group-item")
+    highScoresList.appendChild(highScoresListEl);
+  }
 }
 
 function endGame() {
@@ -106,17 +123,6 @@ startBtn.addEventListener("click", function(event) {
   }
 });
 
-highScoresBtn.addEventListener("click", function(event) {
-  if (hasHiddenClass) {
-    highScoreEl.classList.remove("hidden");
-    frontPageEl.classList.add("hidden");
-  } else {
-    highScoreEl.classList.add("hidden");
-    frontPageEl.classList.remove("hidden");
-  }
-});
-
-
 submitScoreBtn.addEventListener("click", function(event) {
   if (userInitials.value) {
     localStorage.setItem(userInitials.value, parseInt(yourScoreEl.textContent));
@@ -124,18 +130,7 @@ submitScoreBtn.addEventListener("click", function(event) {
   } else {
     console.log("nope")
   }
-
-  var leaderBoard = Object.keys(localStorage).sort(function(a, b) {
-      return localStorage[b] - localStorage[a];
-  });
-
-  for(i = 0; i < leaderBoard.length; i++) {
-      console.log(leaderBoard[i], localStorage.getItem(leaderBoard[i]));
-    var highScoresListEl = document.createElement("li");
-    highScoresListEl.textContent = leaderBoard[i] + " : " + localStorage.getItem(userInitials.value);
-    highScoresListEl.classList.add("high-score-el")
-    highScoresList.appendChild(highScoresListEl);
-  }
+  viewHighScores()
 
   if (hasHiddenClass) {
     highScoreEl.classList.remove("hidden");
@@ -143,6 +138,16 @@ submitScoreBtn.addEventListener("click", function(event) {
   } else {
     highScoreEl.classList.add("hidden");
     allDoneEl.classList.remove("hidden");
+  }
+});
+
+highScoresBtn.addEventListener("click", function(event) {
+  if (hasHiddenClass) {
+    highScoreEl.classList.remove("hidden");
+    frontPageEl.classList.add("hidden");
+  } else {
+    highScoreEl.classList.add("hidden");
+    frontPageEl.classList.remove("hidden");
   }
 });
 
@@ -166,6 +171,5 @@ clearScoresList.addEventListener("click", function(event) {
   scores = [];
   localStorage.clear();
 
-  var element = document.querySelector(".high-score-el")
-  highScoresList.removeChild(element);
+  highScoresList.innerHTML = "";
 });
